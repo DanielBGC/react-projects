@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+import Form from "./components/Form"
+import Card from "./components/Card"
+
 function App() {
   const API_URL = "https://api.github.com/users/"
   
@@ -8,20 +11,14 @@ function App() {
   const [user, setUser] = useState({})
   const [repos, setRepositores] = useState([])
   
-  function submitForm() {
-    const searchEl = document.getElementById("search");
   
-    setUsername(searchEl.value)
-
-    searchEl.value = ""
-  }
-
   useEffect( () => {
     async function getUserData(username) {
       const response = await fetch(API_URL + username)
       const userData = await response.json()
     
       setUser( {...userData} )
+
       console.log(user)
     }
     getUserData(username)
@@ -32,8 +29,7 @@ function App() {
     
       if(repoData)
         setRepositores( [...repoData] )
-        
-      console.log(repos)
+
     }
     getRepos(username)
 
@@ -41,45 +37,9 @@ function App() {
 
   return (
     <div className="App">
-      <form id="form" onSubmit={ (e) => {
-        e.preventDefault()
-        submitForm()
-      }}>
-        <input type="text" id="search" placeholder="Search a github profile" />
-      </form>
+      <Form setUsername={setUsername} />
 
-      {user && 
-        <main id="main">
-          <div className="card">
-              <div>
-                  <a href={user.html_url} target="_blank">
-                    <img className="avatar" src={user.avatar_url} alt={user.login} />
-                  </a>
-              </div>
-              <div className="user-info">
-                  <h2>{user.login}</h2>
-                  <p>{user.bio}</p>
-
-                  <ul className="info">
-                      <li>{user.followers}<strong>Followers</strong></li>
-                      <li>{user.following}<strong>Following</strong></li>
-                      <li>{user.public_repos}<strong>Repos</strong></li>
-                  </ul>
-
-                  <div id="repos">
-                    {
-                      repos
-                      .sort((a, b) => b.stargazers_count - a.stargazers_count)
-                      .map(repo => (
-                        <a className="repo" href={repo.html_url} target="_blank" rel="noopener noreferrer" key={repo.id}> {repo.name} </a>
-                      ))
-                    }
-                  </div>
-              </div>
-          </div>
-        </main>
-      }
-      
+      <Card user={user} repos={repos} />
     </div>
   );
 }
