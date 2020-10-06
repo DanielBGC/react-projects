@@ -17,8 +17,10 @@ function Todo({todo, todos, setTodos}) {
 
     return(
         <ul className="todo-list">
+            {todo.date && <input type="date" className={`todo-date ${todo.completed ? "completed" : ""}`} value={todo.date} readOnly />}
             <div className="todo">
-                <li className={`todo-item ${todo.completed ? "completed" : ""} `} >{todo.text}</li>
+                
+                <li className={`todo-item ${todo.completed ? "completed" : ""}`} >{todo.text}</li>
                 <button  className="complete-btn" onClick={completeTodo}> 
                     <i className="far fa-check-square"></i> 
                 </button>
