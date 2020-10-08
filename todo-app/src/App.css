@@ -37,6 +37,8 @@
     flex-direction: row-reverse;
     justify-content: space-between;
     margin: 0.5rem 2rem;
+
+    border-bottom: 1px solid whitesmoke;
   }
 
   form .inputs {
@@ -108,13 +110,13 @@
     align-items: flex-start;
     flex-direction: column;
     margin-left: 2rem;
+    margin-top: 1rem;
   }
   
   .todo-list {
     min-width: 30%;
     list-style: none;
     display: flex;
-    justify-content: center;
     align-items: center;
   }
   
